@@ -1,0 +1,34 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}My donations{% endblock title %}
+
+{% block meta %}
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+{% endblock meta %}
+
+{% block body %}
+<section class="mx-5 overflow-y-auto max-h-[90vh] pb-20">
+  <p class="text-2xl text-center font-semibold my-5">My Donations</p>
+  <div>
+    {% for donation in donations %}
+        <div class="p-4 rounded bg-gray-50 mb-3 border-gray-500 border">
+          <p><span class="font-semibold">Quantity: </span>{{ donation.quantity }} KG</p>
+            {% if donation.collected %}
+            <p>Status: collected </p>
+          <p><span class="font-semibold">Status: </span>collected</p>
+            {% elif donation.donated %}
+          <p><span class="font-semibold">Status: </span>collecting</p>
+            {% else %}
+          <p><span class="font-semibold">Status: </span>not collected</p>
+            {% endif %}
+          <p><span class="font-semibold">Location: </span>{{ donation.baladiya }}, {{ donation.wilaya }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock body %}

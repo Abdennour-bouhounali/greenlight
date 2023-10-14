@@ -1,0 +1,16 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block body %}
+<section class="mx-5 flex flex-row justify-center items-center">
+  <div class="w-full">
+    <ul>
+      <li><a class="mb-5 block mx-auto mt-4 px-6 py-3 rounded bg-teal-500 text-xl text-white hover:bg-teal-600 shadow-lg text-center" href="{% url 'caps:donate' %}">Donate</a></li>
+      <li><a class="mb-5 block mx-auto mt-4 px-6 py-3 rounded bg-teal-500 text-xl text-white hover:bg-teal-600 shadow-lg text-center" href="{% url 'caps:add_deposit' %}">Add Deposit</a></li>
+      <li><a class="mb-5 block mx-auto mt-4 px-6 py-3 rounded bg-teal-500 text-xl text-white hover:bg-teal-600 shadow-lg text-center" href="{% url 'caps:donations' %}">Work As Volunteer</a></li>
+    </ul>
+  </div>
+</section>
+{% endblock body %}

@@ -1,0 +1,104 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Add Deposit{% endblock title %}
+
+{% block meta %}
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+{% endblock meta %}
+
+{% block body %}
+<section class="mx-5 overflow-y-auto max-h-[90vh] pb-20">
+  <p class="text-2xl text-center font-semibold my-5">Add Deposit</p>
+  <div>
+    <form id="form" method="post">
+      {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+      <div>
+        {{ error }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% csrf_token %}
+      {% for field in form %}
+      <div>
+        {{ field }}
+        {% if field.errors %}
+        {% for error in field.errors %}
+        <div>
+          {{ error }}
+        </div>
+        {% endfor %}
+        {% endif %}
+      </div>
+      {% endfor %}
+      <div id="map" style="width: 100%; height: 300px;"></div>
+      <div>
+        <input class="mb-5 block mx-auto mt-4 px-6 py-3 rounded bg-teal-500 text-xl text-white hover:bg-teal-600 shadow-lg w-full" onclick="makeDeposit()" type="button" value="Add Deposit" />
+      </div>
+    </form>
+  </div>
+  <script>
+    // var algeriaBounds = [[37.060000, -8.674684], [36.059376, -5.336042]]; // Algeria bounds
+    // var map = L.map('map').fitBounds(algeriaBounds); // Set the initial view to Algeria bounds
+
+    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     attribution: '&copy; OpenStreetMap contributors'
+    // }).addTo(map);
+
+    var algeriaBounds = [[22.789634296533773, -8.212458508515398], [36.627238467767185, 8.807740177644199]]; // Algeria bounds
+    var map = L.map('map').setView([0, 0], 2).fitBounds(algeriaBounds);  // Initial map view (center and zoom)
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker = L.marker(algeriaBounds[0], {
+      draggable: true,
+    }).addTo(map);
+
+    marker.on('dragend', function (event) {
+      var position = marker.getLatLng();
+      console.log('Latitude: ' + position.lat + ', Longitude: ' + position.lng);
+    });
+
+    function getLocation() {
+      var position = marker.getLatLng();
+      console.log('You selected: Latitude ' + position.lat + ', Longitude ' + position.lng);
+
+      return [position.lat, position.lng]
+    }
+
+    function makeDeposit () {
+      const form = document.getElementById('form');
+      const [lat, lng] = getLocation();
+      console.log(lat)
+      form.latitude.value = lat;
+      form.longitude.value = lng;
+      console.log(form)
+      const formData = new FormData(form);
+      console.log(formData);
+      form.submit()
+    }
+
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  </script>
+</section>
+{% endblock body %}

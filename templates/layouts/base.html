@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  {% block meta %}{% endblock meta %}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="{% static 'img/logo.svg' %}">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <title>{% block title %}{% endblock title %} | Greenlight</title>
+</head>
+
+<body class="relative">
+  {% block body %}{% endblock body %}
+
+
+  <div class="z-10 bg-white fixed bottom-0 flex justify-around w-full border-t-2 border-t-slate-200 pt-2">
+    <!-- <div>
+      <svg width="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <a href="{% url 'caps:donate' %}">Donate</a>
+    </div> -->
+    <!-- <div>
+      <svg width="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <a href="{% url 'caps:add_deposit' %}">Add Deposit</a>
+    </div> -->
+    <!-- <div>
+      <svg width="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <a href="{% url 'caps:donations' %}">Work as volunteer</a>
+    </div> -->
+    <div>
+      <a id="nav-link" class="text-sm" href="{% url 'accounts:dashboard' %}">
+        <svg style="margin: 0 auto;" width="30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25">
+          </path>
+        </svg>
+        Home
+      </a>
+    </div>
+    <div>
+      <a id="nav-link" class="text-sm" href="{% url 'caps:notifications' %}">
+        <svg style="margin: 0 auto;" width="30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0">
+          </path>
+        </svg>
+        Notifications
+      </a>
+    </div>
+    <div>
+      <a id="nav-link" class="text-sm" href="{% url 'caps:my_donations' %}">
+        <svg style="margin: 0 auto;" width="30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z">
+          </path>
+        </svg>
+        My Donations
+      </a>
+    </div>
+    <div>
+      <a id="nav-link" class="text-sm" href="{% url 'caps:my_deposits' %}">
+        <svg style="margin: 0 auto;" width="30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5.5l-1.5-.5M6.75 7.364V3h-3v18m3-13.636l10.5-3.819">
+          </path>
+        </svg>
+        My Deposists
+      </a>
+    </div>
+  </div>
+  </div>
+  <script>
+    // Get the current page URL
+    let currentPageUrl = window.location.href;
+    const urlObj = new URL(currentPageUrl);
+    currentPageUrl = urlObj.pathname;
+    console.log(currentPageUrl)
+
+    // Select all anchor elements with id "nav-link"
+    const navLinks = document.querySelectorAll('a#nav-link');
+
+    // Iterate through each anchor element
+    navLinks.forEach(link => {
+      // Check if the href matches the current page URL
+      if (link.getAttribute('href') === currentPageUrl) {
+        // Change the color to green
+        link.classList.add('text-teal-500');
+      }
+    });
+  </script>
+
+</body>
+
+</html>

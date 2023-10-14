@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  {% block meta %}{% endblock meta %}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="{% static 'img/logo.svg' %}">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <title>{% block title %}Sign In{% endblock title %} | Greenlight</title>
+</head>
+
+<body class="px-5">
+<section>
+  <div>
+    <img class="mx-auto" src="{% static 'img/logo.png' %}">
+    <form method="post">
+      {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+      <div>
+        {{ error }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% csrf_token %}
+      {% for field in form %}
+      <div>
+        {{ field }}
+        {% if field.errors %}
+        {% for error in field.errors %}
+        <div>
+          {{ error }}
+        </div>
+        {% endfor %}
+        {% endif %}
+      </div>
+      {% endfor %}
+      <div>
+        <input class="mb-5 block mx-auto mt-4 px-6 py-3 rounded bg-teal-500 text-xl text-white hover:bg-teal-600 shadow-lg w-full" type="submit" value="SIGN IN" />
+      </div>
+    </form>
+    <p class="text-base text-lg text-center text-[#adadad]">
+      Not a member yet?
+      <a href="{% url 'accounts:register' %}" class="underline text-teal-800 text-xl">
+        Sign Up
+      </a>
+    </p>
+  </div>
+</section>
+</body>
+
+</html>

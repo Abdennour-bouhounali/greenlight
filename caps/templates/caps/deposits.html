@@ -1,0 +1,85 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Deposits{% endblock title %}
+
+{% block meta %}
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+{% endblock meta %}
+
+{% block body %}
+<section class="mx-5 overflow-y-auto max-h-[90vh] pb-20">
+  <p class="text-2xl text-center font-semibold my-5">Select a Deposit</p>
+  <div>
+    {% if donation.wait_for_vol %}
+      <!-- <p class="mb-5 text-lg">Select a deposit or <a class="underline text-teal-600" type="button" href="{% url 'caps:wait_for_vol' donation.id %}">wait for a volunteer</a></p> -->
+      <p class="mb-5 text-lg">A volunter will reach you as soon as possible or <a class="underline text-teal-600" class="underline" type="button" href="{% url 'caps:not_wait_for_vol' donation.id %}">select a deposit</a></p>
+    {% else %}
+      <p class="mb-5 text-lg">Select a deposit or <a class="underline text-teal-600" type="button" href="{% url 'caps:wait_for_vol' donation.id %}">wait for a volunteer</a></p>
+      <div class="mb-5" id="map" style="width: 100%; height: 300px;"></div>
+      {% for deposit in deposits %}
+          <div class="p-4 rounded bg-gray-50 mb-3 border-gray-500 border">
+              <p><span class="font-semibold">Name: </span>{{ deposit.owner.username }}</p>
+              <p><span class="font-semibold">Location: </span>{{ deposit.baladiya }}, {{ deposit.wilaya }}</p>
+              <button class="underline text-teal-500 p-1 rounded">Contact</button>
+          </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <script>
+    // var algeriaBounds = [[37.060000, -8.674684], [36.059376, -5.336042]]; // Algeria bounds
+    // var map = L.map('map').fitBounds(algeriaBounds); // Set the initial view to Algeria bounds
+
+    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     attribution: '&copy; OpenStreetMap contributors'
+    // }).addTo(map);
+
+    var algeriaBounds = [[22.789634296533773, -8.212458508515398], [36.627238467767185, 8.807740177644199]]; // Algeria bounds
+    var map = L.map('map').setView([0, 0], 2).fitBounds(algeriaBounds);  // Initial map view (center and zoom)
+
+    var depositsData = JSON.parse(`{{ deposits_data | safe }}`);
+    console.log(depositsData)
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    for (var i = 0; i < depositsData.length; i++) {
+      L.marker([depositsData[i]['fields']['latitude'], depositsData[i]['fields']['longitude']], {
+        draggable: false,
+      }).addTo(map);
+    }
+
+    marker.on('dragend', function (event) {
+      var position = marker.getLatLng();
+      console.log('Latitude: ' + position.lat + ', Longitude: ' + position.lng);
+    });
+
+    function getLocation() {
+      var position = marker.getLatLng();
+      console.log('You selected: Latitude ' + position.lat + ', Longitude ' + position.lng);
+
+      return [position.lat, position.lng]
+    }
+
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  </script>
+</section>
+{% endblock body %}
